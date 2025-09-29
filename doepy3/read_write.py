@@ -23,9 +23,13 @@ def read_variables_csv(csvfile):
                 for field in fields:
                     if field not in dict_key:
                         dict_key[field] = []
-                    dict_key[field].append(float(row[field]))
+                    if row[field]:
+                        try:
+                            dict_key[field].append(float(row[field]))
+                        except ValueError:
+                            dict_key[field].append(row[field])
         return dict_key
-    except:
+    except IOError:
         print(
             "Error in reading the specified file from the disk. Please make sure it is in current directory."
         )
